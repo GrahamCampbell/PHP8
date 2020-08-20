@@ -29,7 +29,7 @@ jobs:
           mv Dockerfile-cli Dockerfile
 
       - name: Build and Push
-        run: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag docker.pkg.github.com/grahamcampbell/php8:cli .
+        run: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag docker.pkg.github.com/grahamcampbell/php8/nightly:cli .
 
   fpm:
     runs-on: ubuntu-latest
@@ -53,4 +53,4 @@ jobs:
           mv Dockerfile-fpm Dockerfile
 
       - name: Build and Push
-        run: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag docker.pkg.github.com/grahamcampbell/php8:fpm .
+        run: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag docker.pkg.github.com/grahamcampbell/php8/nightly:fpm .
