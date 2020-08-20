@@ -1,4 +1,4 @@
-name: cli
+name: build
 
 on:
   schedule:
@@ -6,7 +6,8 @@ on:
   push:
 
 jobs:
-  buildx:
+
+  cli:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,15 +31,7 @@ jobs:
       - name: Build and Push
         run: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag docker.pkg.github.com/grahamcampbell/php8:cli .
 
-name: fpm
-
-on:
-  schedule:
-    - cron: '0 2 * * *' # everyday at 2am
-  push:
-
-jobs:
-  buildx:
+  fpm:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
