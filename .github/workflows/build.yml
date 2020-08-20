@@ -19,9 +19,9 @@ jobs:
       - name: Login to Package Registry
         uses: crazy-max/ghaction-docker-login@v1
         with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: registry.gitlab.com
+          username: ${{ secrets.GITLAB_USER }}
+          password: ${{ secrets.GITLAB_TOKEN }}
 
       - name: Set up for CLI Build
         run: |
@@ -29,7 +29,8 @@ jobs:
           mv Dockerfile-cli Dockerfile
 
       - name: Build and Push
-        run: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag docker.pkg.github.com/grahamcampbell/php8/nightly:cli .
+        run: |
+          docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag registry.gitlab.com/grahamcampbell/php8:cli .
 
   fpm:
     runs-on: ubuntu-latest
@@ -43,9 +44,9 @@ jobs:
       - name: Login to Package Registry
         uses: crazy-max/ghaction-docker-login@v1
         with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: registry.gitlab.com
+          username: ${{ secrets.GITLAB_USER }}
+          password: ${{ secrets.GITLAB_TOKEN }}
 
       - name: Set up for CLI Build
         run: |
@@ -53,4 +54,5 @@ jobs:
           mv Dockerfile-fpm Dockerfile
 
       - name: Build and Push
-        run: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag docker.pkg.github.com/grahamcampbell/php8/nightly:fpm .
+        run: |
+          docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag registry.gitlab.com/grahamcampbell/php8:fpm .
