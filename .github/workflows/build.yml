@@ -27,8 +27,6 @@ jobs:
         run: |
           mv docker-php-entrypoint-cli docker-php-entrypoint
           mv Dockerfile-cli Dockerfile
-          docker buildx create --name multibuilder
-          docker buildx use multibuilder
 
       - name: Build and Push
         run: |
@@ -54,8 +52,6 @@ jobs:
         run: |
           mv docker-php-entrypoint-fpm docker-php-entrypoint
           mv Dockerfile-fpm Dockerfile
-          docker buildx create --name multibuilder
-          docker buildx use multibuilder
 
       - name: Build and Push
         run: |
