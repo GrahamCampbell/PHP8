@@ -2,7 +2,7 @@ name: build
 
 on:
   schedule:
-    - cron: '0 2 * * *' # everyday at 2am
+    - cron: '0 1 * * *' # everyday at 1AM
   push:
 
 jobs:
