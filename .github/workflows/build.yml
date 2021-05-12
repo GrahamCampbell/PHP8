@@ -2,7 +2,7 @@ name: build
 
 on:
   schedule:
-    - cron: '0 1 * * *' # everyday at 1AM
+    - cron: '0 2 * * *' # everyday at 2am
   push:
 
 jobs:
@@ -29,11 +29,8 @@ jobs:
           mv Dockerfile-cli Dockerfile
 
       - name: Build and Push
-        uses: nick-invision/retry@v2
-        with:
-          timeout_minutes: 180
-          max_attempts: 2
-          command: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag registry.gitlab.com/grahamcampbell/php8:cli .
+        run: |
+          docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag registry.gitlab.com/grahamcampbell/php8:cli .
 
   fpm:
     runs-on: ubuntu-latest
@@ -51,14 +48,11 @@ jobs:
           username: ${{ secrets.GITLAB_USER }}
           password: ${{ secrets.GITLAB_TOKEN }}
 
-      - name: Set up for FPM Build
+      - name: Set up for CLI Build
         run: |
           mv docker-php-entrypoint-fpm docker-php-entrypoint
           mv Dockerfile-fpm Dockerfile
 
       - name: Build and Push
-        uses: nick-invision/retry@v2
-        with:
-          timeout_minutes: 180
-          max_attempts: 2
-          command: docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag registry.gitlab.com/grahamcampbell/php8:fpm .
+        run: |
+          docker buildx build --push --platform linux/arm64/v8,linux/amd64 --no-cache --tag registry.gitlab.com/grahamcampbell/php8:fpm .
